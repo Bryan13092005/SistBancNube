@@ -36,8 +36,6 @@ public class Registro extends JFrame{
                         Usuario nuevo = new Usuario(nombre, clave, monto,"Ninguna");
 
                         UsuariosDAO.insertarCliente(nuevo);
-
-                        JOptionPane.showMessageDialog(null,"REGISTRO EXITOSO");
                         new Login();
                         dispose();
                     } else {

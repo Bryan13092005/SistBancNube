@@ -18,11 +18,40 @@ public class UsuariosDAO {
             ps.setDouble(3, u.getMonto());
 
             ps.executeUpdate();
-
+            JOptionPane.showMessageDialog(null,"REGISTRO EXITOSO");
         } catch (Exception _e){
             _e.printStackTrace();
         }
     }
+
+    public static boolean eliminarCuenta(String usuario){
+        String sql="delete from cuentasUsuario where usuario=?";
+        try (Connection conn=Conexion.getConexion();
+        PreparedStatement st=conn.prepareStatement(sql)){
+            st.setString(1,usuario);
+            st.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Eliminacion Exitosa");
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void modificarUsuario(String usuNuevo,String claveNueva,String usuarioActual){
+        String sql="update cuentasUsuario set usuario=?,clave=? where usuario=?";
+        try(Connection conn=Conexion.getConexion();
+        PreparedStatement st=conn.prepareStatement(sql)){
+        st.setString(1,usuNuevo);
+        st.setString(2,claveNueva);
+        st.setString(3,usuarioActual);
+        st.executeUpdate();
+        JOptionPane.showMessageDialog(null,"Actualizacion exitosa. En el proximo ingreso vera sus cambios");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public static boolean existeUsuario(String usuario) {
 
         String sql = "SELECT 1 FROM cuentasUsuario WHERE usuario = ?";

@@ -14,6 +14,8 @@ public class BancoPrincipal extends JFrame{
     private JLabel saldo;
     private JLabel usuario;
     private JTextArea HTransacciones;
+    private JButton actualizarDatosButton;
+    private JButton eliminarCuentaButton;
 
     public BancoPrincipal(AccionesBancarias usuarioIngresado){
         setContentPane(Banca);
@@ -24,6 +26,31 @@ public class BancoPrincipal extends JFrame{
         saldo.setText(String.valueOf(usuarioIngresado.getSaldo()));
         usuario.setText(usuarioIngresado.getNombre().toUpperCase());
         HTransacciones.setText(UsuariosDAO.Obtenerhistorial(usuarioIngresado.getNombre().toLowerCase()));
+
+        eliminarCuentaButton.addActionListener(e -> {
+            String usuario=usuarioIngresado.getNombre().toLowerCase();
+            boolean eliminacion=false;
+            String respuesta=JOptionPane.showInputDialog("Ingresa 'SI' para eliminar tu cuenta. Todos tus datos se perderan definitivamente: ");
+            if (respuesta.equalsIgnoreCase("SI")){
+                eliminacion=UsuariosDAO.eliminarCuenta(usuario);
+            }else{
+                JOptionPane.showMessageDialog(null,"Eliminacion cancelada","ABORTADO",JOptionPane.WARNING_MESSAGE);
+            }
+             if (eliminacion){
+                 dispose();
+                 new Login();
+             }
+        });
+
+        actualizarDatosButton.addActionListener(e -> {
+            String usuarioNuevo=JOptionPane.showInputDialog("Ingresa el nuevo nombre de usuario (Al menos 4 digitos): ");
+            String claveNueva=JOptionPane.showInputDialog("Ingresa la nueva clave (Al menos 4 digitos): ");
+            if (usuarioNuevo.trim().isEmpty()||usuarioNuevo.length()<4||claveNueva.trim().isEmpty()||claveNueva.length()<4){
+                JOptionPane.showMessageDialog(null,"Dato Incorrecto","Error Actualizacion",JOptionPane.ERROR_MESSAGE);
+            }else {
+                UsuariosDAO.modificarUsuario(usuarioNuevo,claveNueva,usuarioIngresado.getNombre().toLowerCase());
+            }
+        });
         depositoButton.addActionListener(e -> {
             try {
                 double monto = Double.parseDouble(JOptionPane.showInputDialog("Ingresa el monto a depositar: $"));
