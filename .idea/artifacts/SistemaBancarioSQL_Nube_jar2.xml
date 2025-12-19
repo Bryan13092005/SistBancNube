@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SistemaBancarioSQL-Nube:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/SistemaBancarioSQL_Nube_jar2</output-path>
+    <root id="archive" name="SistemaBancarioSQL-Nube.jar">
+      <element id="module-output" name="SistemaBancarioSQL-Nube" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../mysql-connector-j-9.5.0/mysql-connector-j-9.5.0/mysql-connector-j-9.5.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -69,6 +69,7 @@ public class UsuariosDAO {
             return false;
         }
     }
+
     public static Usuario validarLogin(String usuario, String clave) {
 
         String sql = "SELECT * FROM cuentasUsuario WHERE usuario = ? AND clave = ?";
