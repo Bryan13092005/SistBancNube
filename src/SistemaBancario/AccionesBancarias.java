@@ -23,13 +23,13 @@ public class AccionesBancarias {
     }
 
     public boolean transferir(double monto,String usuarioTranferencia){
-        if (UsuariosDAO.existeUsuario(nombre) && UsuariosDAO.existeUsuario(usuarioTranferencia.toLowerCase())){
-            if (UsuariosDAO.Transferencia(usuarioTranferencia,monto)){
+        if (UsuariosDAO.existeUsuario(nombre) && UsuariosDAO.existeUsuario(usuarioTranferencia.toLowerCase())){//si existe el usuario y el destinatario tambien paso
+            if (UsuariosDAO.Transferencia(usuarioTranferencia,monto)){//si se realizo la transferencia
                 saldo-=monto;
-                ud.actualizarMontos(nombre,saldo);
+                ud.actualizarMontos(nombre,saldo);//actualizo montos
                 return true;
             }
-        }else if (!UsuariosDAO.existeUsuario(usuarioTranferencia.toLowerCase())){
+        }else if (!UsuariosDAO.existeUsuario(usuarioTranferencia.toLowerCase())){//si no existe el usuario
             JOptionPane.showMessageDialog(null,"No existe el usuario a transferir");
         }
         return false;

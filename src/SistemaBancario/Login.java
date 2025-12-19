@@ -15,15 +15,16 @@ public class Login extends JFrame{
     private JPanel login_panel;
     private int intentos=3;
     public Login () {
+        //permite acceder al sistema bancario
         ingresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String nombre = txtUse.getText().trim();
+                String nombre = txtUse.getText().trim();//quitar espacio
                 String pass = txtPass.getText().trim();
 
                 Usuario u = UsuariosDAO.validarLogin(nombre, pass);
-
+//validar nulos
                 if (u == null) {
                     intentos--;
                     txtPass.setText("");
@@ -45,7 +46,7 @@ public class Login extends JFrame{
                 }
             }
         });
-
+//crear un usuario
         registrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

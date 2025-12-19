@@ -6,13 +6,13 @@ import java.sql.SQLException;
 
 public class Conexion {
 
-    private static final String URL =
+    private static final String URL =//url base de datos
             "jdbc:mysql://uxjcpsebks6uid6m:cGypISPPpopfnhAoAFQo@bbva1t1laqoqzcqamcms-mysql.services.clever-cloud.com:3306/bbva1t1laqoqzcqamcms";
     private static final String USER = "uxjcpsebks6uid6m";
     private static final String PASS = "cGypISPPpopfnhAoAFQo";
 
     public static Connection getConexion() {
-        try {
+        try {//intentar la conexion
             return DriverManager.getConnection(URL, USER, PASS);
         } catch (SQLException e) {
             System.out.println("Error de conexión");

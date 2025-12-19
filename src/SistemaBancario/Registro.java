@@ -23,25 +23,26 @@ public class Registro extends JFrame{
         setTitle("Registro Banco Togma-Bryan");
         setSize(400,270);
         setLocationRelativeTo(null);
+        //registrar
         registrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    String nombre=txtUser.getText().trim();
+                    String nombre=txtUser.getText().trim();//obtener datos
                     String clave=txtClave.getText().trim();
                     double monto=Double.parseDouble(txtMonto.getText());
                     boolean existe = UsuariosDAO.existeUsuario(nombre);
-
+//si no existe
                     if (!existe) {
                         Usuario nuevo = new Usuario(nombre, clave, monto,"Ninguna");
-
+//insertar cliente
                         UsuariosDAO.insertarCliente(nuevo);
-                        new Login();
-                        dispose();
-                    } else {
+                        new Login();//abrir login
+                        dispose();//cerrar registro
+                    } else {//si no mostrar mensaje de error
                         JOptionPane.showMessageDialog(null, "NOMBRE DE USUARIO YA EXISTENTE", "EXISTENTE", JOptionPane.WARNING_MESSAGE);
                     }
-                } catch (NumberFormatException ex) {
+                } catch (NumberFormatException ex) {//numero invalido
                     JOptionPane.showMessageDialog(null, "Monto inválido. Ingresa un número válido.","INVALIDO",JOptionPane.ERROR_MESSAGE);
                     txtMonto.setText("");
                 } catch (DatoInvalidoExcepcion ex) {

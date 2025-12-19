@@ -37,14 +37,14 @@ public class UsuariosDAO {
         }
         return false;
     }
-
+//TODOS LOS SQL SON EL SCRIPT A LA BASE DE DATOS Y LOS ? SON VARIABLES QUE VAMOS A ENVIAR
     public static void modificarUsuario(String usuNuevo,String claveNueva,String usuarioActual){
         String sql="update cuentasUsuario set usuario=?,clave=? where usuario=?";
-        try(Connection conn=Conexion.getConexion();
-        PreparedStatement st=conn.prepareStatement(sql)){
-        st.setString(1,usuNuevo);
-        st.setString(2,claveNueva);
-        st.setString(3,usuarioActual);
+        try(Connection conn=Conexion.getConexion();//obtener conexion
+        PreparedStatement st=conn.prepareStatement(sql)){//preparar sql
+        st.setString(1,usuNuevo);//enviar usuario
+        st.setString(2,claveNueva);//enviar clave
+        st.setString(3,usuarioActual);//enviar usuario actual
         st.executeUpdate();
         JOptionPane.showMessageDialog(null,"Actualizacion exitosa. En el proximo ingreso vera sus cambios");
         }catch (Exception e){
@@ -59,10 +59,10 @@ public class UsuariosDAO {
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, usuario.toLowerCase());
+            ps.setString(1, usuario.toLowerCase());//usuario
             ResultSet rs = ps.executeQuery();
 
-            return rs.next();
+            return rs.next();//rs devuelve true si hay coincidencias
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,10 +84,10 @@ public class UsuariosDAO {
 
             if (rs.next()) {
                 return new Usuario(
-                        rs.getString("usuario"),
-                        rs.getString("clave"),
-                        rs.getDouble("monto"),
-                        rs.getString("historialTransacciones")
+                        rs.getString("usuario"),//retornar usuario
+                        rs.getString("clave"),//clave
+                        rs.getDouble("monto"),//monto
+                        rs.getString("historialTransacciones")//historial
                 );
             }
 
@@ -103,10 +103,10 @@ public class UsuariosDAO {
         try(Connection cnn=Conexion.getConexion();
         PreparedStatement ps= cnn.prepareStatement(sql)){
             if(UsuariosDAO.existeUsuario(usuario)){
-                ps.setString(1,usuario);
+                ps.setString(1,usuario);//usuario
                 ResultSet rs=ps.executeQuery();
                 if (rs.next()){
-                    return rs.getString("historialTransacciones");
+                    return rs.getString("historialTransacciones");//obtener historial transacciones
                 }
             }
         }catch (Exception e){
@@ -125,13 +125,13 @@ public class UsuariosDAO {
                 concat(historialTransacciones,char(10),?)
             )
         where usuario = ?
-        """;
+        """;//si ht es ninguna pongo el nuevoHistorial o sino concateno con char(10) que es un enter al nuevo historial
         if (UsuariosDAO.existeUsuario(usuario)) {
             try (Connection conn = Conexion.getConexion();
                  PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1,nuevaAccion);
-                ps.setString(2,nuevaAccion);
-                ps.setString(3,usuario);
+                ps.setString(1,nuevaAccion);//accion que se realizo (depsitar, retirar, transfereir etc)
+                ps.setString(2,nuevaAccion);//setear historial
+                ps.setString(3,usuario);//usuario
                 ps.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -141,11 +141,11 @@ public class UsuariosDAO {
 
     public void actualizarMontos(String usuario,double montoNuevo){
         if(UsuariosDAO.existeUsuario(usuario)){
-            String sql="update cuentasUsuario set monto=? where usuario=?";
+            String sql="update cuentasUsuario set monto=? where usuario=?";//
             try(Connection conn=Conexion.getConexion();
                 PreparedStatement ps=conn.prepareStatement(sql)){
-                ps.setDouble(1,montoNuevo);
-                ps.setString(2,usuario);
+                ps.setDouble(1,montoNuevo);//valor nuevo
+                ps.setString(2,usuario);//usuario
                 ps.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Accion realizada correctamente");
             }catch (Exception e){
